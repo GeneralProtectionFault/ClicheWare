@@ -62,6 +62,12 @@ align = 1
 valign = 1
 autowrap = true
 
+[node name="StartPosition2D" type="Control" parent="CanvasLayer"]
+margin_left = 625.0
+margin_top = 324.0
+margin_right = 625.0
+margin_bottom = 324.0
+
 [node name="Bed1" type="Sprite" parent="."]
 position = Vector2( 640, 352 )
 texture = ExtResource( 1 )
