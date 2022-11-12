@@ -21,6 +21,14 @@ public partial class BedGame : CanvasLayer
 	public enum MiniGameState {PLAYING, SELECTING_ANSWER, ANSWER_SELECTED, CORRECT_ANSWER_SELECTED, INCORRECT_ANSWER_SELECTED};
 	private MiniGameState CurrentState = MiniGameState.PLAYING;
 
+
+	public int Difficulty = 1;
+	public int ConsecutiveCorrect = 0;
+
+
+
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -64,9 +72,15 @@ public partial class BedGame : CanvasLayer
 
 	private void LoadQuestion()
 	{
+		if (ConsecutiveCorrect >= 10 && Difficulty == 1)
+		{
+			Difficulty += 1;
+			GD.Print($"Difficulty is now level {Difficulty}!");
+		}
+
 		Player.GetNode<Sprite>("Sprite").Position = PlayerStartPosition.RectPosition;
 
-		Question = DatabaseHandler.QuestionCollection.Find(x => x.MiniGame == "Bed" && x.Difficulty == 1).OrderBy(x => RandomQuestionNumber.Next()).First();
+		Question = DatabaseHandler.QuestionCollection.Find(x => x.MiniGame == "Bed" && x.Difficulty == Difficulty).OrderBy(x => RandomQuestionNumber.Next()).First();
 
 		// Set the question text
 		QuestionLabel.Text = Question.QuestionText;
@@ -111,6 +125,7 @@ public partial class BedGame : CanvasLayer
 		if (Answer.Value == true)
 		{
 			CurrentState = MiniGameState.CORRECT_ANSWER_SELECTED;
+			ConsecutiveCorrect += 1;
 			GD.Print("Good job, WRONG answer!");
 
 			var DelayTimer = GetTree().CreateTimer(2.5f);
@@ -122,6 +137,7 @@ public partial class BedGame : CanvasLayer
 		else if (Answer.Value == false)
 		{
 			CurrentState = MiniGameState.INCORRECT_ANSWER_SELECTED;
+			ConsecutiveCorrect = 0;
 			GD.Print("Incorrect, RIGHT answer!");
 
 			var DelayTimer = GetTree().CreateTimer(2.5f);

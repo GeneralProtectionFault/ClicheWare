@@ -27,10 +27,10 @@ border_color = Color( 0, 0, 0, 1 )
 script = ExtResource( 2 )
 
 [node name="LeftLabel" type="Label" parent="CanvasLayer" groups=["AnswerLabels"]]
-margin_left = 58.0
-margin_top = 276.0
-margin_right = 327.0
-margin_bottom = 407.0
+margin_left = 23.0
+margin_top = 223.0
+margin_right = 424.0
+margin_bottom = 427.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "#"
@@ -39,10 +39,10 @@ valign = 1
 autowrap = true
 
 [node name="RightLabel" type="Label" parent="CanvasLayer" groups=["AnswerLabels"]]
-margin_left = 906.0
-margin_top = 276.0
-margin_right = 1182.0
-margin_bottom = 407.0
+margin_left = 841.0
+margin_top = 225.0
+margin_right = 1257.0
+margin_bottom = 424.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "#"
