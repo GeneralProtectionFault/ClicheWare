@@ -15,6 +15,7 @@ public partial class BedGame : CanvasLayer
 	Question Question;
 
 	Random RandomQuestionNumber = new Random();
+	Random RandomLoopNumber = new Random();
 
 	//bool MovementTweenActive = false;
 	public enum MiniGameState {PLAYING, SELECTING_ANSWER, ANSWER_SELECTED, CORRECT_ANSWER_SELECTED, INCORRECT_ANSWER_SELECTED};
@@ -68,22 +69,19 @@ public partial class BedGame : CanvasLayer
 		Question = DatabaseHandler.QuestionCollection.Find(x => x.MiniGame == "Bed" && x.Difficulty == 1).OrderBy(x => RandomQuestionNumber.Next()).First();
 
 		// Set the question text
-		
 		QuestionLabel.Text = Question.QuestionText;
 
+		var AnswerLabels = GetTree().GetNodesInGroup("AnswerLabels");
+
+		// Randomize the order of the Label objects
+		AnswerLabels.Shuffle();
+
 		// Set the answers
-		// Randomize loop
-		Random RandomLoopNumber = new Random();
-		foreach (int i in Enumerable.Range(0, Question.Answers.Count).OrderBy(x => RandomLoopNumber.Next()))
+		foreach(int i in Enumerable.Range(0, Question.Answers.Count).OrderBy(x => RandomLoopNumber.Next()))
 		{
-			// GD.Print(i);
-
-			if (i == 0)
-				LeftLabel.Text = Question.Answers[i].Key;
-			else if (i == 1)
-				RightLabel.Text = Question.Answers[i].Key;
+			// This will be random because of the shuffling of the Label array above
+			(AnswerLabels[i] as Label).Text = Question.Answers[i].Key;
 		}
-
 	}
 
 
